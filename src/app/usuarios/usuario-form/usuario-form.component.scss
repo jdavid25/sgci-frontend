@@ -1,0 +1,24 @@
+.form-panel {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #d9e1ec;
+  border-radius: 0.5rem;
+}
+
+.form-header {
+  margin-bottom: 1rem;
+}
+
+.form-header h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}

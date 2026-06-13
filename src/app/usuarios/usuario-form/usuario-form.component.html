@@ -1,0 +1,98 @@
+<section class="form-panel">
+  <form [formGroup]="form" (ngSubmit)="enviar()">
+    <div class="form-header">
+      <h2>{{ esEdicion ? 'Editar usuario' : 'Nuevo usuario' }}</h2>
+    </div>
+
+    @if (mensajeError()) {
+      <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+        <i class="bi bi-exclamation-triangle"></i>
+        <span>{{ mensajeError() }}</span>
+      </div>
+    }
+
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label for="identificacion" class="form-label">Identificacion</label>
+        <input id="identificacion" type="text" class="form-control" formControlName="identificacion" />
+        @if (form.controls.identificacion.touched && form.controls.identificacion.invalid) {
+          <div class="form-text text-danger">La identificacion es obligatoria.</div>
+        }
+      </div>
+
+      <div class="col-md-8">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input id="nombre" type="text" class="form-control" formControlName="nombre" />
+        @if (form.controls.nombre.touched && form.controls.nombre.invalid) {
+          <div class="form-text text-danger">El nombre es obligatorio.</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label for="correo" class="form-label">Correo</label>
+        <input id="correo" type="email" class="form-control" formControlName="correo" />
+        @if (form.controls.correo.touched && form.controls.correo.invalid) {
+          <div class="form-text text-danger">Ingrese un correo valido.</div>
+        }
+      </div>
+
+      <div class="col-md-6">
+        <label for="nombreUsuario" class="form-label">Nombre usuario</label>
+        <input id="nombreUsuario" type="text" class="form-control" formControlName="nombreUsuario" />
+        @if (form.controls.nombreUsuario.touched && form.controls.nombreUsuario.invalid) {
+          <div class="form-text text-danger">El nombre de usuario es obligatorio.</div>
+        }
+      </div>
+
+      <div class="col-md-4">
+        <label for="clave" class="form-label">Clave</label>
+        <input id="clave" type="password" class="form-control" formControlName="clave" />
+        @if (form.controls.clave.touched && form.controls.clave.invalid) {
+          <div class="form-text text-danger">
+            {{ esEdicion ? 'La clave debe tener minimo 8 caracteres.' : 'La clave es obligatoria y debe tener minimo 8 caracteres.' }}
+          </div>
+        }
+      </div>
+
+      <div class="col-md-4">
+        <label for="rolId" class="form-label">Rol</label>
+        <select id="rolId" class="form-select" formControlName="rolId">
+          <option [ngValue]="0">Seleccione</option>
+          @for (rol of roles(); track rol.id) {
+            <option [ngValue]="rol.id">{{ rol.nombre }}</option>
+          }
+        </select>
+        @if (form.controls.rolId.touched && form.controls.rolId.invalid) {
+          <div class="form-text text-danger">Seleccione un rol.</div>
+        }
+      </div>
+
+      <div class="col-md-4">
+        <label for="estadoId" class="form-label">Estado</label>
+        <select id="estadoId" class="form-select" formControlName="estadoId">
+          <option [ngValue]="0">Seleccione</option>
+          @for (estado of estados(); track estado.id) {
+            <option [ngValue]="estado.id">{{ estado.nombre }}</option>
+          }
+        </select>
+        @if (form.controls.estadoId.touched && form.controls.estadoId.invalid) {
+          <div class="form-text text-danger">Seleccione un estado.</div>
+        }
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-outline-secondary" (click)="cancelar.emit()" [disabled]="guardando()">
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary d-flex align-items-center gap-2" [disabled]="guardando()">
+        @if (guardando()) {
+          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+        } @else {
+          <i class="bi bi-save"></i>
+        }
+        <span>Guardar</span>
+      </button>
+    </div>
+  </form>
+</section>
