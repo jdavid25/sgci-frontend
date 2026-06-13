@@ -38,6 +38,12 @@ export const routes: Routes = [
         loadComponent: () => import('./convocatorias/convocatorias.component').then((m) => m.ConvocatoriasComponent)
       },
       {
+        path: 'convocatorias-disponibles',
+        canActivate: [roleGuard],
+        data: { roles: ['DOCENTE', 'ESTUDIANTE'] },
+        loadComponent: () => import('./convocatorias-disponibles/convocatorias-disponibles.component').then((m) => m.ConvocatoriasDisponiblesComponent)
+      },
+      {
         path: 'postulaciones',
         canActivate: [roleGuard],
         data: { roles: ['ADMINISTRADOR', 'ESTUDIANTE'], title: 'Postulaciones' },

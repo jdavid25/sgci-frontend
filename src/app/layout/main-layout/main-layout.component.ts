@@ -44,6 +44,12 @@ export class MainLayoutComponent {
       roles: ['ADMINISTRADOR']
     },
     {
+      label: 'Convocatorias',
+      icon: 'bi-megaphone',
+      route: '/convocatorias-disponibles',
+      roles: ['DOCENTE', 'ESTUDIANTE']
+    },
+    {
       label: 'Postulaciones',
       icon: 'bi-clipboard-check',
       route: '/postulaciones',

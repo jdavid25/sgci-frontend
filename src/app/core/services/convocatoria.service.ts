@@ -16,6 +16,10 @@ export class ConvocatoriaService {
     return this.http.get<Convocatoria[]>(this.url);
   }
 
+  listarPublicadas(): Observable<Convocatoria[]> {
+    return this.http.get<Convocatoria[]>(`${this.url}/publicadas`);
+  }
+
   obtenerPorId(id: number): Observable<Convocatoria> {
     return this.http.get<Convocatoria>(`${this.url}/${id}`);
   }
