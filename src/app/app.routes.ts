@@ -22,8 +22,8 @@ export const routes: Routes = [
       {
         path: 'usuarios',
         canActivate: [roleGuard],
-        data: { roles: ['ADMINISTRADOR'], title: 'Usuarios' },
-        loadComponent: () => import('./shared/placeholder-page/placeholder-page.component').then((m) => m.PlaceholderPageComponent)
+        data: { roles: ['ADMINISTRADOR'] },
+        loadComponent: () => import('./usuarios/usuarios.component').then((m) => m.UsuariosComponent)
       },
       {
         path: 'categorias',

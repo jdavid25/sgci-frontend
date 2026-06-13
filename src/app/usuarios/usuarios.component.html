@@ -1,0 +1,63 @@
+<section class="page-header">
+  <div>
+    <h1>Usuarios</h1>
+    <p>Gestion de usuarios del sistema</p>
+  </div>
+
+  <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2" (click)="cargarUsuarios()" [disabled]="cargando()">
+    <i class="bi bi-arrow-clockwise"></i>
+    <span>Actualizar</span>
+  </button>
+</section>
+
+@if (mensajeError()) {
+  <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+    <i class="bi bi-exclamation-triangle"></i>
+    <span>{{ mensajeError() }}</span>
+  </div>
+}
+
+<section class="table-panel">
+  @if (cargando()) {
+    <div class="loading-state">
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span>Cargando usuarios</span>
+    </div>
+  } @else if (usuarios().length === 0) {
+    <div class="empty-state">
+      <i class="bi bi-inbox"></i>
+      <span>No hay usuarios registrados</span>
+    </div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col">Identificacion</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Rol</th>
+            <th scope="col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (usuario of usuarios(); track usuario.id) {
+            <tr>
+              <td>{{ usuario.identificacion }}</td>
+              <td>{{ usuario.nombre }}</td>
+              <td>{{ usuario.correo }}</td>
+              <td>{{ usuario.nombreUsuario }}</td>
+              <td>
+                <span class="badge text-bg-light border">{{ usuario.rolNombre }}</span>
+              </td>
+              <td>
+                <span class="badge text-bg-success">{{ usuario.estadoNombre }}</span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>
