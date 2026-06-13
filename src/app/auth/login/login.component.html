@@ -1,0 +1,73 @@
+<main class="login-page">
+  <section class="login-panel">
+    <div class="brand mb-4">
+      <div class="brand-icon">
+        <i class="bi bi-mortarboard"></i>
+      </div>
+      <div>
+        <h1>SGCI</h1>
+        <p>Sistema de Gestion de Convocatorias Institucionales</p>
+      </div>
+    </div>
+
+    <form class="card login-card" [formGroup]="form" (ngSubmit)="ingresar()">
+      <div class="card-body">
+        <h2 class="h4 mb-4">Iniciar sesion</h2>
+
+        @if (mensajeError) {
+          <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+            <i class="bi bi-exclamation-triangle"></i>
+            <span>{{ mensajeError }}</span>
+          </div>
+        }
+
+        <div class="mb-3">
+          <label for="nombreUsuario" class="form-label">Usuario</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-person"></i>
+            </span>
+            <input
+              id="nombreUsuario"
+              type="text"
+              class="form-control"
+              formControlName="nombreUsuario"
+              autocomplete="username"
+            />
+          </div>
+          @if (form.controls.nombreUsuario.touched && form.controls.nombreUsuario.invalid) {
+            <div class="form-text text-danger">El usuario es obligatorio.</div>
+          }
+        </div>
+
+        <div class="mb-4">
+          <label for="clave" class="form-label">Contraseña</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-lock"></i>
+            </span>
+            <input
+              id="clave"
+              type="password"
+              class="form-control"
+              formControlName="clave"
+              autocomplete="current-password"
+            />
+          </div>
+          @if (form.controls.clave.touched && form.controls.clave.invalid) {
+            <div class="form-text text-danger">La contraseña es obligatoria.</div>
+          }
+        </div>
+
+        <button class="btn btn-primary w-100 d-flex justify-content-center align-items-center gap-2" type="submit" [disabled]="enviando">
+          @if (enviando) {
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+          } @else {
+            <i class="bi bi-box-arrow-in-right"></i>
+          }
+          <span>Ingresar</span>
+        </button>
+      </div>
+    </form>
+  </section>
+</main>
