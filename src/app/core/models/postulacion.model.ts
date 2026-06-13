@@ -13,3 +13,7 @@ export interface Postulacion {
 export interface PostulacionCreateRequest {
   convocatoriaId: number;
 }
+
+export interface PostulacionEstadoRequest {
+  estadoId: number;
+}

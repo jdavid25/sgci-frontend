@@ -53,7 +53,13 @@ export class MainLayoutComponent {
       label: 'Postulaciones',
       icon: 'bi-clipboard-check',
       route: '/postulaciones',
-      roles: ['ADMINISTRADOR', 'ESTUDIANTE']
+      roles: ['ADMINISTRADOR']
+    },
+    {
+      label: 'Mis postulaciones',
+      icon: 'bi-clipboard-check',
+      route: '/mis-postulaciones',
+      roles: ['ESTUDIANTE']
     },
     {
       label: 'Reportes',

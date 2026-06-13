@@ -1,0 +1,98 @@
+<section class="page-header">
+  <div>
+    <h1>Postulaciones</h1>
+    <p>Gestion de postulaciones recibidas</p>
+  </div>
+
+  <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2" (click)="cargarPostulaciones()" [disabled]="cargando()">
+    <i class="bi bi-arrow-clockwise"></i>
+    <span>Actualizar</span>
+  </button>
+</section>
+
+@if (mensajeExito()) {
+  <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
+    <i class="bi bi-check-circle"></i>
+    <span>{{ mensajeExito() }}</span>
+  </div>
+}
+
+@if (mensajeError()) {
+  <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+    <i class="bi bi-exclamation-triangle"></i>
+    <span>{{ mensajeError() }}</span>
+  </div>
+}
+
+<section class="table-panel">
+  @if (cargando()) {
+    <div class="loading-state">
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span>Cargando postulaciones</span>
+    </div>
+  } @else if (postulaciones().length === 0) {
+    <div class="empty-state">
+      <i class="bi bi-inbox"></i>
+      <span>No hay postulaciones registradas</span>
+    </div>
+  } @else {
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col">Convocatoria</th>
+            <th scope="col">Estudiante</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Fecha</th>
+            <th scope="col" class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (postulacion of postulaciones(); track postulacion.id) {
+            <tr>
+              <td>{{ postulacion.convocatoriaNombre }}</td>
+              <td>{{ postulacion.usuarioNombre }}</td>
+              <td>
+                <span class="badge" [ngClass]="badgeEstado(postulacion.estadoNombre)">
+                  {{ postulacion.estadoNombre }}
+                </span>
+              </td>
+              <td>{{ postulacion.createdAt | date: 'yyyy-MM-dd HH:mm' }}</td>
+              <td class="text-center">
+                <div class="d-inline-flex gap-2">
+                  <button
+                    type="button"
+                    class="btn btn-outline-success btn-sm d-inline-flex align-items-center gap-1"
+                    (click)="cambiarEstado(postulacion, 'APROBADA')"
+                    [disabled]="!puedeCambiar(postulacion, 'APROBADA')"
+                  >
+                    @if (estaCambiando(postulacion, 'APROBADA')) {
+                      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    } @else {
+                      <i class="bi bi-check-lg"></i>
+                    }
+                    <span>Aprobar</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger btn-sm d-inline-flex align-items-center gap-1"
+                    (click)="cambiarEstado(postulacion, 'RECHAZADA')"
+                    [disabled]="!puedeCambiar(postulacion, 'RECHAZADA')"
+                  >
+                    @if (estaCambiando(postulacion, 'RECHAZADA')) {
+                      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                    } @else {
+                      <i class="bi bi-x-lg"></i>
+                    }
+                    <span>Rechazar</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

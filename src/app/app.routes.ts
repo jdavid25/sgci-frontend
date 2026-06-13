@@ -46,8 +46,14 @@ export const routes: Routes = [
       {
         path: 'postulaciones',
         canActivate: [roleGuard],
-        data: { roles: ['ADMINISTRADOR', 'ESTUDIANTE'], title: 'Postulaciones' },
-        loadComponent: () => import('./shared/placeholder-page/placeholder-page.component').then((m) => m.PlaceholderPageComponent)
+        data: { roles: ['ADMINISTRADOR'] },
+        loadComponent: () => import('./postulaciones/postulaciones.component').then((m) => m.PostulacionesComponent)
+      },
+      {
+        path: 'mis-postulaciones',
+        canActivate: [roleGuard],
+        data: { roles: ['ESTUDIANTE'] },
+        loadComponent: () => import('./mis-postulaciones/mis-postulaciones.component').then((m) => m.MisPostulacionesComponent)
       },
       {
         path: 'reportes',
