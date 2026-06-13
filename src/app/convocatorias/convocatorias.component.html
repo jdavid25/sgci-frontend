@@ -1,0 +1,115 @@
+<section class="page-header">
+  <div>
+    <h1>Convocatorias</h1>
+    <p>Gestion de convocatorias institucionales</p>
+  </div>
+
+  @if (!mostrandoFormulario()) {
+    <div class="d-flex gap-2">
+      <button type="button" class="btn btn-primary d-flex align-items-center gap-2" (click)="mostrarFormulario()">
+        <i class="bi bi-plus-lg"></i>
+        <span>Nueva convocatoria</span>
+      </button>
+
+      <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2" (click)="cargarConvocatorias()" [disabled]="cargando()">
+        <i class="bi bi-arrow-clockwise"></i>
+        <span>Actualizar</span>
+      </button>
+    </div>
+  }
+</section>
+
+@if (mensajeExito()) {
+  <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
+    <i class="bi bi-check-circle"></i>
+    <span>{{ mensajeExito() }}</span>
+  </div>
+}
+
+@if (mensajeError()) {
+  <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+    <i class="bi bi-exclamation-triangle"></i>
+    <span>{{ mensajeError() }}</span>
+  </div>
+}
+
+@if (mostrandoFormulario()) {
+  <app-convocatoria-form
+    [convocatoria]="convocatoriaSeleccionada()"
+    [estados]="estados()"
+    [categorias]="categorias()"
+    (guardado)="convocatoriaGuardada($event)"
+    (cancelar)="cancelarFormulario()"
+  />
+} @else {
+  <section class="table-panel">
+    @if (cargando()) {
+      <div class="loading-state">
+        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+        <span>Cargando convocatorias</span>
+      </div>
+    } @else if (convocatorias().length === 0) {
+      <div class="empty-state">
+        <i class="bi bi-inbox"></i>
+        <span>No hay convocatorias registradas</span>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Fechas</th>
+              <th scope="col">Cupos</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Categorias</th>
+              <th scope="col" class="text-end">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (convocatoria of convocatorias(); track convocatoria.id) {
+              <tr>
+                <td>
+                  <div class="fw-semibold">{{ convocatoria.nombre }}</div>
+                  <div class="text-muted small descripcion">{{ convocatoria.descripcion }}</div>
+                </td>
+                <td>{{ convocatoria.fechaInicio }} a {{ convocatoria.fechaFin }}</td>
+                <td>{{ convocatoria.cuposDisponibles }}</td>
+                <td>
+                  <span class="badge text-bg-light border">{{ convocatoria.estadoNombre }}</span>
+                </td>
+                <td>
+                  <div class="d-flex flex-wrap gap-1">
+                    @for (categoria of convocatoria.categorias; track categoria.id) {
+                      <span class="badge text-bg-secondary">{{ categoria.nombre }}</span>
+                    }
+                  </div>
+                </td>
+                <td class="text-end">
+                  <div class="d-inline-flex gap-2">
+                    <button type="button" class="btn btn-outline-secondary btn-sm" (click)="editarConvocatoria(convocatoria)" title="Editar convocatoria">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger btn-sm"
+                      (click)="eliminarConvocatoria(convocatoria)"
+                      [disabled]="eliminandoId() === convocatoria.id"
+                      title="Eliminar convocatoria"
+                    >
+                      @if (eliminandoId() === convocatoria.id) {
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                      } @else {
+                        <i class="bi bi-trash"></i>
+                      }
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+}

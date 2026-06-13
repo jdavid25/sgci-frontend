@@ -34,8 +34,8 @@ export const routes: Routes = [
       {
         path: 'convocatorias',
         canActivate: [roleGuard],
-        data: { roles: ['ADMINISTRADOR', 'DOCENTE', 'ESTUDIANTE'], title: 'Convocatorias' },
-        loadComponent: () => import('./shared/placeholder-page/placeholder-page.component').then((m) => m.PlaceholderPageComponent)
+        data: { roles: ['ADMINISTRADOR'] },
+        loadComponent: () => import('./convocatorias/convocatorias.component').then((m) => m.ConvocatoriasComponent)
       },
       {
         path: 'postulaciones',

@@ -1,0 +1,54 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+p {
+  color: #667085;
+}
+
+.table-panel {
+  background: #fff;
+  border: 1px solid #d9e1ec;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.loading-state,
+.empty-state {
+  min-height: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: #667085;
+}
+
+.empty-state i {
+  font-size: 1.25rem;
+}
+
+.descripcion {
+  max-width: 24rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+th {
+  color: #475467;
+  font-weight: 700;
+}

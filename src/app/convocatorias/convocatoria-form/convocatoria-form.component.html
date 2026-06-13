@@ -1,0 +1,95 @@
+<section class="form-panel">
+  <form [formGroup]="form" (ngSubmit)="enviar()">
+    <div class="form-header">
+      <h2>{{ esEdicion ? 'Editar convocatoria' : 'Nueva convocatoria' }}</h2>
+    </div>
+
+    @if (mensajeError()) {
+      <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+        <i class="bi bi-exclamation-triangle"></i>
+        <span>{{ mensajeError() }}</span>
+      </div>
+    }
+
+    <div class="row g-3">
+      <div class="col-md-8">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input id="nombre" type="text" class="form-control" formControlName="nombre" />
+        @if (form.controls.nombre.touched && form.controls.nombre.invalid) {
+          <div class="form-text text-danger">El nombre es obligatorio.</div>
+        }
+      </div>
+
+      <div class="col-md-4">
+        <label for="estadoId" class="form-label">Estado</label>
+        <select id="estadoId" class="form-select" formControlName="estadoId">
+          <option [ngValue]="0">Seleccione</option>
+          @for (estado of estados(); track estado.id) {
+            <option [ngValue]="estado.id">{{ estado.nombre }}</option>
+          }
+        </select>
+        @if (form.controls.estadoId.touched && form.controls.estadoId.invalid) {
+          <div class="form-text text-danger">Seleccione un estado.</div>
+        }
+      </div>
+
+      <div class="col-12">
+        <label for="descripcion" class="form-label">Descripcion</label>
+        <textarea id="descripcion" class="form-control" rows="4" formControlName="descripcion"></textarea>
+        @if (form.controls.descripcion.touched && form.controls.descripcion.invalid) {
+          <div class="form-text text-danger">La descripcion es obligatoria.</div>
+        }
+      </div>
+
+      <div class="col-md-4">
+        <label for="fechaInicio" class="form-label">Fecha inicio</label>
+        <input id="fechaInicio" type="date" class="form-control" formControlName="fechaInicio" />
+        @if (form.controls.fechaInicio.touched && form.controls.fechaInicio.invalid) {
+          <div class="form-text text-danger">La fecha inicio es obligatoria.</div>
+        }
+      </div>
+
+      <div class="col-md-4">
+        <label for="fechaFin" class="form-label">Fecha fin</label>
+        <input id="fechaFin" type="date" class="form-control" formControlName="fechaFin" />
+        @if (form.controls.fechaFin.touched && form.controls.fechaFin.invalid) {
+          <div class="form-text text-danger">La fecha fin es obligatoria.</div>
+        }
+      </div>
+
+      <div class="col-md-4">
+        <label for="cuposDisponibles" class="form-label">Cupos disponibles</label>
+        <input id="cuposDisponibles" type="number" min="1" class="form-control" formControlName="cuposDisponibles" />
+        @if (form.controls.cuposDisponibles.touched && form.controls.cuposDisponibles.invalid) {
+          <div class="form-text text-danger">Los cupos deben ser mayores a cero.</div>
+        }
+      </div>
+
+      <div class="col-md-8">
+        <label for="categoriaIds" class="form-label">Categorias</label>
+        <select id="categoriaIds" class="form-select" multiple size="5" formControlName="categoriaIds">
+          @for (categoria of categorias(); track categoria.id) {
+            <option [ngValue]="categoria.id">{{ categoria.nombre }}</option>
+          }
+        </select>
+        @if (form.controls.categoriaIds.touched && form.controls.categoriaIds.invalid) {
+          <div class="form-text text-danger">Seleccione al menos una categoria.</div>
+        }
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-outline-secondary" (click)="cancelar.emit()" [disabled]="guardando()">
+        Cancelar
+      </button>
+      <button type="submit" class="btn btn-primary d-flex align-items-center gap-2" [disabled]="guardando()">
+        @if (guardando()) {
+          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+        } @else {
+          <i class="bi bi-save"></i>
+        }
+        <span>Guardar</span>
+      </button>
+    </div>
+  </form>
+</section>

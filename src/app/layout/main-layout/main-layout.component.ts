@@ -41,7 +41,7 @@ export class MainLayoutComponent {
       label: 'Convocatorias',
       icon: 'bi-megaphone',
       route: '/convocatorias',
-      roles: ['ADMINISTRADOR', 'DOCENTE', 'ESTUDIANTE']
+      roles: ['ADMINISTRADOR']
     },
     {
       label: 'Postulaciones',
