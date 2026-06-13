@@ -28,8 +28,8 @@ export const routes: Routes = [
       {
         path: 'categorias',
         canActivate: [roleGuard],
-        data: { roles: ['ADMINISTRADOR'], title: 'Categorias' },
-        loadComponent: () => import('./shared/placeholder-page/placeholder-page.component').then((m) => m.PlaceholderPageComponent)
+        data: { roles: ['ADMINISTRADOR'] },
+        loadComponent: () => import('./categorias/categorias.component').then((m) => m.CategoriasComponent)
       },
       {
         path: 'convocatorias',
