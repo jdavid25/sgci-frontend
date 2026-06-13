@@ -4,17 +4,19 @@
     <p>Gestion de categorias de convocatorias</p>
   </div>
 
-  <div class="d-flex gap-2">
-    <button type="button" class="btn btn-primary d-flex align-items-center gap-2" (click)="mostrarFormulario()">
-      <i class="bi bi-plus-lg"></i>
-      <span>Nueva categoria</span>
-    </button>
+  @if (!mostrandoFormulario()) {
+    <div class="d-flex gap-2">
+      <button type="button" class="btn btn-primary d-flex align-items-center gap-2" (click)="mostrarFormulario()">
+        <i class="bi bi-plus-lg"></i>
+        <span>Nueva categoria</span>
+      </button>
 
-    <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2" (click)="cargarCategorias()" [disabled]="cargando()">
-      <i class="bi bi-arrow-clockwise"></i>
-      <span>Actualizar</span>
-    </button>
-  </div>
+      <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2" (click)="cargarCategorias()" [disabled]="cargando()">
+        <i class="bi bi-arrow-clockwise"></i>
+        <span>Actualizar</span>
+      </button>
+    </div>
+  }
 </section>
 
 @if (mensajeExito()) {
