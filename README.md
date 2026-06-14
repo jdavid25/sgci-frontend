@@ -1,59 +1,170 @@
-# SgciFrontend
+# SGCI Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.1.
+Frontend del Sistema de Gestion de Convocatorias Institucionales (SGCI).
 
-## Development server
+La aplicacion esta construida con Angular 22, Bootstrap 5.3, Bootstrap Icons, formularios reactivos, guards por rol, interceptor JWT y graficos con Chart.js mediante ng2-charts.
 
-To start a local development server, run:
+## Requisitos
 
-```bash
+- Node.js 24.16.0 o version compatible con Angular 22.
+- npm 11.13.0.
+- Angular CLI 22.0.1.
+- Backend SGCI ejecutandose en `http://localhost:8080`.
+
+## Instalacion
+
+Desde la raiz del frontend:
+
+```powershell
+npm install
+```
+
+Dependencias principales usadas por la aplicacion:
+
+- `@angular/*`
+- `bootstrap`
+- `bootstrap-icons`
+- `@popperjs/core`
+- `chart.js`
+- `ng2-charts`
+
+## Configuracion
+
+La URL del backend esta definida en:
+
+```text
+src/environments/environment.ts
+```
+
+Valor actual:
+
+```ts
+export const environment = {
+  apiUrl: 'http://localhost:8080/api'
+};
+```
+
+Si el backend cambia de puerto o dominio, actualizar este valor.
+
+## Ejecutar El Proyecto
+
+```powershell
+npm start
+```
+
+Tambien se puede ejecutar con:
+
+```powershell
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+La aplicacion queda disponible en:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```text
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Si PowerShell bloquea `npm`, usar:
 
-```bash
-ng generate --help
+```powershell
+npm.cmd start
 ```
 
-## Building
+## Compilar
 
-To build the project run:
-
-```bash
-ng build
+```powershell
+npm run build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Si PowerShell bloquea `npm`, usar:
 
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+```powershell
+npm.cmd run build
 ```
 
-## Running end-to-end tests
+La salida se genera en:
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
+```text
+dist/sgci-frontend
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Modulos Implementados
 
-## Additional Resources
+- Autenticacion:
+  - Login.
+  - Guardado de JWT.
+  - Logout.
+- Seguridad frontend:
+  - Guard de autenticacion.
+  - Guard por rol.
+  - Interceptor para enviar `Authorization: Bearer TOKEN`.
+- Layout:
+  - Navbar y menu principal con Bootstrap.
+  - Opciones visibles segun rol.
+- Usuarios:
+  - Listado.
+  - Crear.
+  - Editar.
+  - Eliminar mediante soft delete en backend.
+- Categorias:
+  - Listado.
+  - Crear.
+  - Editar.
+  - Eliminar mediante soft delete en backend.
+- Convocatorias:
+  - Listado administrativo.
+  - Crear.
+  - Editar.
+  - Eliminar mediante soft delete en backend.
+  - Consulta de convocatorias disponibles para docentes y estudiantes.
+- Postulaciones:
+  - Postulacion de estudiantes.
+  - Consulta de mis postulaciones.
+  - Gestion administrativa para aprobar o rechazar.
+- Reportes:
+  - Convocatorias por categoria.
+  - Postulaciones por convocatoria.
+  - Resultado de postulaciones.
+  - Graficos con Chart.js.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Rutas Principales
+
+| Ruta | Acceso |
+| --- | --- |
+| `/login` | Publica |
+| `/dashboard` | Usuario autenticado |
+| `/usuarios` | Administrador |
+| `/categorias` | Administrador |
+| `/convocatorias` | Administrador |
+| `/convocatorias-disponibles` | Docente, Estudiante |
+| `/postulaciones` | Administrador |
+| `/mis-postulaciones` | Estudiante |
+| `/reportes` | Administrador |
+
+## Roles
+
+La interfaz usa los roles entregados por el backend al iniciar sesion:
+
+- `ADMINISTRADOR`
+- `DOCENTE`
+- `ESTUDIANTE`
+
+## Flujo Manual Recomendado
+
+1. Iniciar el backend en `http://localhost:8080`.
+2. Iniciar el frontend con `npm start`.
+3. Entrar a `http://localhost:4200`.
+4. Iniciar sesion con el usuario administrador inicial.
+5. Validar usuarios, categorias, convocatorias, postulaciones y reportes.
+
+Usuario administrador inicial:
+
+```text
+nombreUsuario: admin
+clave: password123
+```
+
+## Notas
+
+- Los estados usados en pantalla son estados de negocio recibidos desde el backend.
+- Bootstrap esta configurado desde `src/styles.scss` y el bundle JavaScript de Bootstrap desde `angular.json`.
