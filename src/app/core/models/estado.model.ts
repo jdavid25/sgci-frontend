@@ -1,4 +1,4 @@
-export type TipoEstado = 'GENERAL' | 'CONVOCATORIA' | 'POSTULACION';
+export type TipoEstado = 'CONVOCATORIA' | 'POSTULACION';
 
 export interface Estado {
   id: number;

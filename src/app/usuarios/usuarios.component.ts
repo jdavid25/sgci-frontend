@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { Estado } from '../core/models/estado.model';
 import { Rol } from '../core/models/rol.model';
 import { Usuario } from '../core/models/usuario.model';
-import { EstadoService } from '../core/services/estado.service';
 import { RolService } from '../core/services/rol.service';
 import { UsuarioService } from '../core/services/usuario.service';
 import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
@@ -17,11 +15,9 @@ import { UsuarioFormComponent } from './usuario-form/usuario-form.component';
 export class UsuariosComponent {
   private readonly usuarioService = inject(UsuarioService);
   private readonly rolService = inject(RolService);
-  private readonly estadoService = inject(EstadoService);
 
   readonly usuarios = signal<Usuario[]>([]);
   readonly roles = signal<Rol[]>([]);
-  readonly estados = signal<Estado[]>([]);
   readonly cargando = signal(false);
   readonly eliminandoId = signal<number | null>(null);
   readonly mostrandoFormulario = signal(false);
@@ -102,11 +98,6 @@ export class UsuariosComponent {
     this.rolService.listar().subscribe({
       next: (roles) => this.roles.set(roles),
       error: (error) => this.mensajeError.set(error.error?.message ?? 'No fue posible cargar los roles.')
-    });
-
-    this.estadoService.listarPorTipo('GENERAL').subscribe({
-      next: (estados) => this.estados.set(estados),
-      error: (error) => this.mensajeError.set(error.error?.message ?? 'No fue posible cargar los estados.')
     });
   }
 

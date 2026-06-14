@@ -6,8 +6,6 @@ export interface Usuario {
   nombreUsuario: string;
   rolId: number;
   rolNombre: string;
-  estadoId: number;
-  estadoNombre: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -19,5 +17,4 @@ export interface UsuarioRequest {
   nombreUsuario: string;
   clave?: string;
   rolId: number;
-  estadoId: number;
 }

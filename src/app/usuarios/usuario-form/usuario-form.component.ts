@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Estado } from '../../core/models/estado.model';
 import { Rol } from '../../core/models/rol.model';
 import { Usuario, UsuarioRequest } from '../../core/models/usuario.model';
 import { UsuarioService } from '../../core/services/usuario.service';
@@ -18,7 +17,6 @@ export class UsuarioFormComponent {
 
   readonly usuario = input<Usuario | null>(null);
   readonly roles = input<Rol[]>([]);
-  readonly estados = input<Estado[]>([]);
   readonly guardando = signal(false);
   readonly mensajeError = signal('');
 
@@ -31,8 +29,7 @@ export class UsuarioFormComponent {
     correo: ['', [Validators.required, Validators.email, Validators.maxLength(150)]],
     nombreUsuario: ['', [Validators.required, Validators.maxLength(80)]],
     clave: ['', [Validators.minLength(8), Validators.maxLength(100)]],
-    rolId: [0, [Validators.required, Validators.min(1)]],
-    estadoId: [0, [Validators.required, Validators.min(1)]]
+    rolId: [0, [Validators.required, Validators.min(1)]]
   });
 
   constructor() {
@@ -45,8 +42,7 @@ export class UsuarioFormComponent {
         correo: usuario?.correo ?? '',
         nombreUsuario: usuario?.nombreUsuario ?? '',
         clave: '',
-        rolId: usuario?.rolId ?? 0,
-        estadoId: usuario?.estadoId ?? 0
+        rolId: usuario?.rolId ?? 0
       });
 
       this.actualizarValidadorClave(Boolean(usuario));
@@ -71,8 +67,7 @@ export class UsuarioFormComponent {
       nombre: formValue.nombre,
       correo: formValue.correo,
       nombreUsuario: formValue.nombreUsuario,
-      rolId: formValue.rolId,
-      estadoId: formValue.estadoId
+      rolId: formValue.rolId
     };
 
     if (formValue.clave) {
