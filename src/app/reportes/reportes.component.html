@@ -1,0 +1,174 @@
+<section class="page-header">
+  <div>
+    <h1>Reportes</h1>
+    <p>Resumen de convocatorias y postulaciones</p>
+  </div>
+
+  <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2" (click)="cargarReportes()" [disabled]="cargando()">
+    <i class="bi bi-arrow-clockwise"></i>
+    <span>Actualizar</span>
+  </button>
+</section>
+
+@if (mensajeError()) {
+  <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+    <i class="bi bi-exclamation-triangle"></i>
+    <span>{{ mensajeError() }}</span>
+  </div>
+}
+
+@if (cargando()) {
+  <section class="table-panel">
+    <div class="loading-state">
+      <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span>Cargando reportes</span>
+    </div>
+  </section>
+} @else {
+  <div class="report-grid">
+    <section class="report-panel">
+      <header class="report-header">
+        <h2>Convocatorias por categoria</h2>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="alternarConvocatoriasCategoria()">
+          <i class="bi" [ngClass]="mostrarConvocatoriasCategoria() ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+        </button>
+      </header>
+
+      @if (mostrarConvocatoriasCategoria()) {
+        @if (convocatoriasCategoria().length === 0) {
+          <div class="empty-state">
+            <i class="bi bi-inbox"></i>
+            <span>No hay datos para mostrar</span>
+          </div>
+        } @else {
+          <div class="chart-box">
+            <canvas
+              baseChart
+              [data]="convocatoriasCategoriaChart()"
+              [options]="barChartOptions"
+              [type]="'bar'"
+              [legend]="false"
+            ></canvas>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Categoria</th>
+                  <th scope="col" class="text-end">Convocatorias</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of convocatoriasCategoria(); track item.categoriaId) {
+                  <tr>
+                    <td>{{ item.categoriaNombre }}</td>
+                    <td class="text-end fw-semibold">{{ item.totalConvocatorias }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      }
+    </section>
+
+    <section class="report-panel">
+      <header class="report-header">
+        <h2>Postulaciones por convocatoria</h2>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="alternarPostulacionesConvocatoria()">
+          <i class="bi" [ngClass]="mostrarPostulacionesConvocatoria() ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+        </button>
+      </header>
+
+      @if (mostrarPostulacionesConvocatoria()) {
+        @if (postulacionesConvocatoria().length === 0) {
+          <div class="empty-state">
+            <i class="bi bi-inbox"></i>
+            <span>No hay datos para mostrar</span>
+          </div>
+        } @else {
+          <div class="chart-box">
+            <canvas
+              baseChart
+              [data]="postulacionesConvocatoriaChart()"
+              [options]="barChartOptions"
+              [type]="'bar'"
+              [legend]="false"
+            ></canvas>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Convocatoria</th>
+                  <th scope="col" class="text-end">Postulaciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of postulacionesConvocatoria(); track item.convocatoriaId) {
+                  <tr>
+                    <td>{{ item.convocatoriaNombre }}</td>
+                    <td class="text-end fw-semibold">{{ item.totalPostulaciones }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      }
+    </section>
+
+    <section class="report-panel">
+      <header class="report-header">
+        <h2>Resultado de postulaciones</h2>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="alternarResultadoPostulaciones()">
+          <i class="bi" [ngClass]="mostrarResultadoPostulaciones() ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+        </button>
+      </header>
+
+      @if (mostrarResultadoPostulaciones()) {
+        @if (resultadoPostulaciones().length === 0) {
+          <div class="empty-state">
+            <i class="bi bi-inbox"></i>
+            <span>No hay datos para mostrar</span>
+          </div>
+        } @else {
+          <div class="chart-box chart-box-small">
+            <canvas
+              baseChart
+              [data]="resultadoPostulacionesChart()"
+              [options]="doughnutChartOptions"
+              [type]="'doughnut'"
+              [legend]="true"
+            ></canvas>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Estado</th>
+                  <th scope="col" class="text-end">Postulaciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of resultadoPostulaciones(); track item.estadoNombre) {
+                  <tr>
+                    <td>
+                      <span class="badge" [ngClass]="item.estadoNombre === 'APROBADA' ? 'text-bg-success' : 'text-bg-danger'">
+                        {{ item.estadoNombre }}
+                      </span>
+                    </td>
+                    <td class="text-end fw-semibold">{{ item.totalPostulaciones }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      }
+    </section>
+  </div>
+}
